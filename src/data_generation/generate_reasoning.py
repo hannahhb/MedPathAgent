@@ -390,7 +390,7 @@ if __name__ == '__main__':
     logger.info(f"Processing from index {start_idx} to {end_idx} (total {test_samples})")
 
     # Load KG
-    primekg = pd.read_csv('/Users/hannah_mac/Documents/rmit/rmit_hons_y4/MedReason/kg.csv', low_memory=False)
+    primekg = pd.read_csv('./kg.csv', low_memory=False)
     G = utils.build_graph(primekg[['x_name', 'display_relation', 'y_name']].values.tolist())
 
     # 1) Set model name
@@ -403,7 +403,7 @@ if __name__ == '__main__':
     model     = AutoModel.from_pretrained(emb_model_name).to(device)
     model.eval()
 
-    cache_file = 'node_embeddings_sapbert.pt'
+    cache_file = './node_embeddings_sapbert.pt'
 
 
     # 3) Update your node‐embedding generation call

@@ -5,3 +5,4 @@ results/*
 logs/*
 kg.csv
 node.*pt
+*deprecated
