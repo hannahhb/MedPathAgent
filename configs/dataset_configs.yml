@@ -1,0 +1,109 @@
+huatuo:
+  file_type: huggingface
+  path: FreedomIntelligence/medical-o1-reasoning-SFT
+  split: train
+  parsers:
+    question: [{key: Question, prefix: "", suffix: ""}] # use the default parser if this part is a list
+    answer: [{key: Response, prefix: "", suffix: ""}]
+    comparison: [{key: Complex_CoT, prefix: "", suffix: ""}]
+    options: [] # parser for options
+  name: en
+
+# get the raw data at https://github.com/aistairc/medLLM_QA_benchmark/blob/main/data/en/MMLU/mmlu_en_medical.jsonl
+MMLU:
+  file_type: json
+  path: /path/to/mmlu_en_medical.jsonl
+  split: train
+  parsers:
+    question: [{key: problem_text, prefix: "", suffix: ""}]
+    answer: mmlu_answer_parser # get the parser with complex logic, which is a function defined in the QADataset class
+    comparison: [] # empty list means return a empty string for this part
+    options: mmlu_option_parser
+
+
+# get the data at https://huggingface.co/datasets/bigbio/med_qa/tree/main
+medqa:
+  file_type: json
+  path: /path/to/medqa.jsonl
+  split: train
+  parsers:
+    question: [{key: question, prefix: "", suffix: ""}]
+    answer: [{key: answer, prefix: "", suffix: ""}]
+    comparison: []
+    options: medqa_option_parser
+
+medmcqa:
+  file_type: huggingface
+  path: openlifescienceai/medmcqa
+  split: train
+  parsers:
+    question: [{key: question, prefix: "", suffix: ""}] 
+    answer: medmcqa_answer_parser
+    comparison: []
+    options: medmcqa_option_parser
+
+pubmedqa_artificial:
+  file_type: huggingface
+  path: qiaojin/PubMedQA
+  split: train
+  parsers:
+    question: [{key: question, prefix: "", suffix: ""}] 
+    answer: [{key: final_decision, prefix: "The final decision is: ", suffix: "."}, {key: long_answer, prefix: "", suffix: ""}] 
+    comparison: []
+    options: pubmedqa_option_parser
+  name: pqa_artificial
+
+pubmedqa_labeled:
+  file_type: huggingface
+  path: qiaojin/PubMedQA
+  split: train
+  parsers:
+    question: [{key: question, prefix: "", suffix: ""}] 
+    answer: [{key: final_decision, prefix: "The final decision is: ", suffix: "."}, {key: long_answer, prefix: "", suffix: ""}] 
+    comparison: []
+    options: pubmedqa_option_parser
+  name: pqa_labeled
+
+pubmedqa_unlabeled:
+  file_type: huggingface
+  path: qiaojin/PubMedQA
+  split: train
+  parsers:
+    question: [{key: question, prefix: "", suffix: ""}] 
+    answer: [{key: long_answer, prefix: "", suffix: ""}] 
+    comparison: []
+    options: pubmedqa_option_parser
+  name: pqa_unlabeled
+
+
+MedXpertQA:
+  file_type: huggingface
+  path: TsinghuaC3I/MedXpertQA
+  split: test
+  parsers:
+    question: [{key: question, prefix: "", suffix: ""}] 
+    answer: medxpertqa_answer_parser
+    comparison: []
+    options: []
+  name: Text
+
+LastHumanity:
+  file_type: json
+  path: /path/to/LastHumanity.jsonl
+  split: train
+  parsers:
+    question: [{key: question, prefix: "", suffix: ""}] 
+    answer: [{key: answer, prefix: "", suffix: ""}]
+    comparison: [{key: rationale, prefix: "", suffix: ""}] 
+    options: []
+
+curebench:
+  file_type: json
+  path: /Users/hannah_mac/Documents/rmit/rmit_hons_y4/cure_bench/data/curebench_testset_phase2.jsonl  # your JSONL with records in the given format
+  split: test
+  parsers:
+    question: [{key: question, prefix: "", suffix: ""}]
+    answer: []        # no gold answers; your pipeline will generate them
+    comparison: []    # no rationale field in this dataset
+    options: [{key: options, prefix: "", suffix: ""}]  # pass the options dict through
+  name: default
